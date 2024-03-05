@@ -10,17 +10,18 @@ public class LispInterpreter {
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
         List<String> tokens = lexer.tokenize(inputProgram);
+        System.out.println(tokens);
 
-        // Paso 2: Análisis Sintáctico
-        Parser parser = new Parser();
-        LispExpression program = parser.parse(tokens);
+        // // Paso 2: Análisis Sintáctico
+        // Parser parser = new Parser();
+        // LispExpression program = parser.parse(tokens);
 
-        // Paso 3: Crear un entorno y evaluar el programa
-        Environment environment = new Environment();
-        Evaluator evaluator = new Evaluator();
-        LispExpression result = evaluator.evaluate(program, environment);
+        // // Paso 3: Crear un entorno y evaluar el programa
+        // Environment environment = new Environment();
+        // Evaluator evaluator = new Evaluator();
+        // LispExpression result = evaluator.evaluate(program, environment);
 
-        // Imprimir el resultado
-        System.out.println(result);
+        // // Imprimir el resultado
+        // System.out.println(result);
     }
 }
