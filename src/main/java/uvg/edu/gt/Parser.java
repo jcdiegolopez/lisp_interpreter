@@ -2,7 +2,6 @@ package uvg.edu.gt;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Parser {
     public LispExpression parse(List<String> tokens) {
@@ -37,13 +36,16 @@ public class Parser {
         // Avanzar al siguiente token después del paréntesis de apertura.
         index++;
 
-        // Verificar si hay una definición de función (defun)
-        if (tokens.get(index).equals("defun")) {
-            // Avanzar al siguiente token después de "defun"
-            index++;
+        // Obtener el token actual.
+        String functionName = tokens.get(index);
 
+        // Avanzar al siguiente token después del nombre de la función.
+        index++;
+
+        // Si el token actual es "defun", interpretamos la lista como una definición de función.
+        if (functionName.equals("defun")) {
             // Obtener el nombre de la función
-            String functionName = tokens.get(index);
+            String defunName = tokens.get(index);
 
             // Avanzar al siguiente token después del nombre de la función
             index++;
@@ -72,15 +74,10 @@ public class Parser {
             }
 
             // Devolver una expresión que represente la definición de la función.
-            return new LispFunction(parameters, parseExpression(tokens, index + 1), parentEnvironment);
+            LispExpression body = parseExpression(tokens, index + 1);
+            return new LispFunction(parameters, body, null);
         } else {
-            // Si no es una definición de función, es una llamada a función normal
-            // Obtener el token actual, que debería ser el nombre de la función.
-            String functionName = tokens.get(index);
-
-            // Avanzar al siguiente token después del nombre de la función.
-            index++;
-
+            // Si no es una definición de función, es una llamada a función normal.
             // Crear una lista para almacenar los argumentos de la función.
             List<LispExpression> arguments = new ArrayList<>();
 
@@ -98,5 +95,4 @@ public class Parser {
             return new LispFunctionCall(functionName, arguments);
         }
     }
-
 }
