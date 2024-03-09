@@ -1,6 +1,9 @@
 package uvg.edu.gt;
 
-public class LispExpression {
-    // Esta clase puede tener propiedades y métodos para representar diferentes tipos de expresiones LISP.
-    // Por ejemplo, propiedades para operadores, operandos, funciones, etc.
+public interface LispExpression {
+    // Método para evaluar la expresión en el contexto de un entorno dado.
+    LispExpression evaluate(Environment environment);
+
+    // Método para obtener una representación de cadena de la expresión Lisp.
+    String toString();
 }

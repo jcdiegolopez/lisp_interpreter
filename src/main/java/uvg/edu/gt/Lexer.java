@@ -23,6 +23,7 @@ public class Lexer {
         }
 
         // Devolver la lista de tokens.
+        System.out.println(tokens);
         return tokens;
     }
 
