@@ -10,6 +10,7 @@ public class SetQExpression extends Expression {
     @Override
     public Object evaluate(Environment environment) {
         // Evaluar el valor de la expresión y asignarlo a la variable en el entorno
+        System.out.println("Evaluando SetQ: " + variableName + " = " + valueExpression);
         Object value = valueExpression.evaluate(environment);
         environment.setVariable(variableName, value);
         return value;

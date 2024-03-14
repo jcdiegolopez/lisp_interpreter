@@ -28,6 +28,7 @@ public class ListN extends Expression {
         System.out.println(result);
 
         for (Expression element : elements) {
+            
             result.add(element.evaluate(environment));
         }
 

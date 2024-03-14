@@ -20,9 +20,9 @@ public class Interpreter {
         environment.addFunction(">", new BuiltInFunction(">", new GreaterThanOperation()));
 
         // Agregar símbolos
-/*        environment.addSymbol("defun");
+/*      environment.addSymbol("defun");
         environment.addSymbol("setq");
-        environment.addSymbol("quote");
+         environment.addSymbol("quote");
         environment.addSymbol("cond");
         environment.addSymbol("atom");
         environment.addSymbol("list");
@@ -59,8 +59,8 @@ public class Interpreter {
         // Instanciar el intérprete y ejecutar código Lisp
         Interpreter interpreter = new Interpreter();
         // Aquí puedes agregar el código Lisp para ser interpretado
-        /*String code = "(+ (* 10 2) (/ 100 5))";*/
-        String code = "quote (+ 3 4)";
+        String code = "(setq a 3) (+ (* a 3) (/ 100 5))";
+        // String code = "quote (+ 3 4)";
         Object result = interpreter.interpret(code);
         System.out.println("Resultado de la interpretación: " + result);
     }
