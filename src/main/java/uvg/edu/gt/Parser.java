@@ -1,98 +1,141 @@
 package uvg.edu.gt;
 
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
-    public LispExpression parse(List<String> tokens) {
-        // Inicializar un índice para rastrear la posición actual en la lista de tokens.
-        int index = 0;
+    private int current = 0;
+    private List<String> tokens;
 
-        // Llamar al método privado parseExpression para comenzar el análisis sintáctico.
-        return parseExpression(tokens, index);
+    public Parser(List<String> tokens) {
+        this.tokens = tokens;
     }
 
-    private LispExpression parseExpression(List<String> tokens, int index) {
-        // Verificar si hemos alcanzado el final de la lista de tokens.
-        if (index >= tokens.size()) {
-            // Si no hay más tokens, lanzar una excepción de sintaxis.
-            throw new RuntimeException("Error de sintaxis: La expresión está incompleta");
+    public List<Expression> parse() {
+        List<Expression> expressions = new ArrayList<>();
+        while (current < tokens.size()) {
+            expressions.add(parseExpression());
         }
+        return expressions;
+    }
 
-        // Obtener el token actual.
-        String token = tokens.get(index);
-
-        // Manejar diferentes tipos de expresiones Lisp.
-        if (token.equals("(")) {
-            // Si el token es un paréntesis de apertura, la expresión es una lista.
-            return parseList(tokens, index);
+    private Expression parseExpression() {
+        String token = tokens.get(current++);
+        
+        if (isNumber(token)) {
+            return new ConstantExpression(Integer.parseInt(token));
+        } else if (token.equals("(")) {
+            return parseList();
+        } else if (token.equals("QUOTE") || token.equals("'")) {
+            return parseQuote();
+        } else if (token.equals("DEFUN")) {
+            return parseDefun();
+        } else if (token.equals("SETQ")) {
+            return parseSetq();
+        } else if (isPredicate(token)) {
+            return parsePredicate(token);
+        } else if (token.equals("COND")) {
+            return parseCond();
+        } else if (isArithmeticOperator(token)) { // Modificado para verificar si es un operador aritmético
+            
+            return parseArithmeticOperation(token); // Nuevo método para parsear expresiones aritméticas
         } else {
-            // Si el token no es un paréntesis de apertura, se considera un átomo.
-            return new LispAtom(token);
+            return new VariableExpression(token);
         }
     }
 
-    private LispExpression parseList(List<String> tokens, int index) {
-        // Avanzar al siguiente token después del paréntesis de apertura.
-        index++;
-
-        // Obtener el token actual.
-        String functionName = tokens.get(index);
-
-        // Avanzar al siguiente token después del nombre de la función.
-        index++;
-
-        // Si el token actual es "defun", interpretamos la lista como una definición de función.
-        if (functionName.equals("defun")) {
-            // Obtener el nombre de la función
-            String defunName = tokens.get(index);
-
-            // Avanzar al siguiente token después del nombre de la función
-            index++;
-
-            // Obtener la lista de parámetros
-            List<String> parameters = new ArrayList<>();
-            while (!tokens.get(index).equals("(")) {
-                parameters.add(tokens.get(index));
-                index++;
-            }
-
-            // Avanzar al siguiente token después del paréntesis de apertura de los argumentos
-            index++;
-
-            // Crear una lista para almacenar los argumentos de la función.
-            List<LispExpression> arguments = new ArrayList<>();
-
-            // Iterar sobre los tokens restantes hasta encontrar el paréntesis de cierre.
-            while (!tokens.get(index).equals(")")) {
-                // Llamar recursivamente a parseExpression para analizar cada argumento de la función.
-                LispExpression argument = parseExpression(tokens, index);
-                arguments.add(argument);
-
-                // Incrementar el índice para pasar al siguiente token.
-                index++;
-            }
-
-            // Devolver una expresión que represente la definición de la función.
-            LispExpression body = parseExpression(tokens, index + 1);
-            return new LispFunction(parameters, body, null);
-        } else {
-            // Si no es una definición de función, es una llamada a función normal.
-            // Crear una lista para almacenar los argumentos de la función.
-            List<LispExpression> arguments = new ArrayList<>();
-
-            // Iterar sobre los tokens restantes hasta encontrar el paréntesis de cierre.
-            while (!tokens.get(index).equals(")")) {
-                // Llamar recursivamente a parseExpression para analizar cada argumento de la función.
-                LispExpression argument = parseExpression(tokens, index);
-                arguments.add(argument);
-
-                // Incrementar el índice para pasar al siguiente token.
-                index++;
-            }
-
-            // Devolver una expresión que represente la llamada a la función.
-            return new LispFunctionCall(functionName, arguments);
+    private ListExpression parseList() {
+        List<Expression> expressions = new ArrayList<>();
+        while (!tokens.get(current).equals(")")) {
+            expressions.add(parseExpression());
         }
+        current++;
+        return new ListExpression(expressions);
+    }
+
+    private Expression parseQuote() {
+        // Para la instrucción QUOTE, simplemente devuelve la expresión siguiente.
+        return parseExpression();
+    }
+
+    private Expression parseArithmeticOperation(String operator) {
+        Expression left = parseExpression();
+        Expression right = parseExpression();
+        return new ArithmeticExpression(operator, left, right);
+    }
+
+    private boolean isArithmeticOperator(String token) {
+        
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+
+    }
+    
+    
+
+    private Expression parseDefun() {
+        // Parsea la definición de una función.
+        String functionName = tokens.get(current++);
+        List<String> parameters = parseParameterList();
+        List<Expression> body = new ArrayList<>();
+        while (!tokens.get(current).equals(")")) {
+            body.add(parseExpression());
+        }
+        current++; // Consumir el token ')'
+        return new DefunExpression(functionName, parameters, body);
+    }
+
+    private List<String> parseParameterList() {
+        List<String> parameters = new ArrayList<>();
+        current++; // Consumir el token '('
+        while (!tokens.get(current).equals(")")) {
+            parameters.add(tokens.get(current++));
+        }
+        current++; // Consumir el token ')'
+        return parameters;
+    }
+
+    private Expression parseSetq() {
+        // Parsea una expresión SETQ.
+        String variable = tokens.get(current++);
+        Expression value = parseExpression();
+        return new SetqExpression(variable, value);
+    }
+
+    private Expression parsePredicate(String token) {
+        // Parsea un predicado.
+        List<Expression> arguments = new ArrayList<>();
+        while (!tokens.get(current).equals(")")) {
+            arguments.add(parseExpression());
+        }
+        current++; // Consumir el token ')'
+        return new PredicateExpression(token, arguments);
+    }
+
+    private Expression parseCond() {
+        // Parsea una expresión COND.
+        List<ConditionalExpression.Branch> branches = new ArrayList<>();
+        current++; // Consumir el token '('
+        while (!tokens.get(current).equals(")")) {
+            Expression condition = parseExpression();
+            Expression result = parseExpression();
+            branches.add(new ConditionalExpression.Branch(condition, result));
+        }
+        current++; // Consumir el token ')'
+        return new ConditionalExpression(branches);
+    }
+
+    private boolean isNumber(String token) {
+        try {
+            Integer.parseInt(token);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isPredicate(String token) {
+        return token.equals("ATOM") || token.equals("LIST") || token.equals("EQUAL") ||
+               token.equals("<") || token.equals(">");
     }
 }

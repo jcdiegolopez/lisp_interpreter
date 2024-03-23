@@ -1,34 +1,27 @@
 package uvg.edu.gt;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Environment {
-    Map<String, LispExpression> variables;
-    Map<String, LispFunction> functions;
+    private Map<String, Expression> variables = new HashMap<>();
+    private Map<String, Function> functions = new HashMap<>();
 
-    public Environment() {
-        variables = new HashMap<>();
-        functions = new HashMap<>();
-    }
-
-    // Método para almacenar una variable en el entorno.
-    public void setVariable(String name, LispExpression value) {
+    public void defineVariable(String name, Expression value) {
         variables.put(name, value);
     }
 
-    // Método para obtener el valor de una variable del entorno.
-    public LispExpression getVariable(String name) {
-        return variables.get(name);
-    }
-
-    // Método para almacenar una función en el entorno.
-    public void setFunction(String name, LispFunction function) {
+    public void defineFunction(String name, List<String> parameters, List<Expression> body) {
+        Function function = new Function(name, parameters, body);
         functions.put(name, function);
     }
 
-    // Método para obtener una función del entorno.
-    public LispFunction getFunction(String name) {
+    public Expression lookupVariable(String name) {
+        return variables.get(name);
+    }
+
+    public Function lookupFunction(String name) {
         return functions.get(name);
     }
 }

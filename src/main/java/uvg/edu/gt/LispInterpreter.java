@@ -4,24 +4,24 @@ import java.util.List;
 
 public class LispInterpreter {
     public static void main(String[] args) {
-        String inputProgram = "(defun sum (a b) (+ a b))";
+        // Definir el código Lisp a evaluar
+        String inputProgram = "(+ (* 2 3) (/ (- 10 5) 2))";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
         List<String> tokens = lexer.tokenize(inputProgram);
-        System.out.println(tokens);
+        System.err.println(tokens);
 
-        // Paso 2: Análisis Sintáctico
-        Parser parser = new Parser();
-        LispExpression program = parser.parse(tokens);
-        System.out.println(program);
+        // Paso 2: Parseo
+        Parser parser = new Parser(tokens);
+        List<Expression> expressions = parser.parse();
+        
 
-        // Paso 3: Crear un entorno y evaluar el programa
+        // Paso 3: Evaluación
         Environment environment = new Environment();
-        Evaluator evaluator = new Evaluator();
-        LispExpression result = evaluator.evaluate(program, environment);
-
-        // Imprimir el resultado
-        System.out.println(result);
+        for (Expression exp : expressions) {
+            System.err.println(exp);
+            System.err.println(exp.evaluate(environment));
+        }
     }
 }
