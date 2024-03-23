@@ -5,12 +5,12 @@ import java.util.List;
 public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
-        String inputProgram = "(< (* 3 5) (3))";
+        String inputProgram = "(setq x 10)(+ 3 x)";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
         List<String> tokens = lexer.tokenize(inputProgram);
-        System.err.println(tokens);
+        System.err.println("tokens: " + tokens);
 
         // Paso 2: Parseo
         Parser parser = new Parser(tokens);
@@ -19,9 +19,10 @@ public class LispInterpreter {
 
         // Paso 3: Evaluación
         Environment environment = new Environment();
+        int count = 1;
         for (Expression exp : expressions) {
-            System.err.println(exp);
-            System.err.println(exp.evaluate(environment));
+            System.out.println("Resultado Exp "+ count + " :" +exp.evaluate(environment));
+            count++;
         }
     }
 }

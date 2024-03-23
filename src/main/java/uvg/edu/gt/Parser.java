@@ -24,17 +24,17 @@ public class Parser {
         String token = tokens.get(current++);
         if (isNumber(token)) {
             return new ConstantExpression(Integer.parseInt(token));
-        } else if (token.equals("(")) {
+        } else if (token.equalsIgnoreCase("(")) {
             return parseList();
-        } else if (token.equals("QUOTE") || token.equals("'")) {
+        } else if (token.equalsIgnoreCase("QUOTE") || token.equals("'")) {
             return parseQuote();
-        } else if (token.equals("DEFUN")) {
+        } else if (token.equalsIgnoreCase("DEFUN")) {
             return parseDefun();
-        } else if (token.equals("SETQ")) {
+        } else if (token.equalsIgnoreCase("SETQ")) {
             return parseSetq();
         } else if (isPredicate(token)) {
             return parsePredicate(token);
-        } else if (token.equals("COND")) {
+        } else if (token.equalsIgnoreCase("COND")) {
             return parseCond();
         } else if (isArithmeticOperator(token)) {
             return parseArithmeticOperation(token);
@@ -46,7 +46,6 @@ public class Parser {
     private ListExpression parseList() {
         List<Expression> expressions = new ArrayList<>();
         while (!tokens.get(current).equals(")")) {
-            System.err.println("Parsing list element: " + tokens.get(current));
             expressions.add(parseExpression());
         }
         current++;
