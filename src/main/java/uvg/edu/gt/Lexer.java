@@ -32,8 +32,7 @@ public class Lexer {
         List<String> tokens = new ArrayList<>();
 
         // Patrón para identificar paréntesis, palabras, números y cadenas de texto.
-        Pattern pattern = Pattern.compile("([()+\\-*/])|(\\w+)|(\\d+)|(\"[^\"]*\")");
-
+        Pattern pattern = Pattern.compile("([()+\\-*/<>=])|(\\w+)|(\\d+)|(\"[^\"]*\")");
         // Crear un objeto Matcher para la palabra.
         Matcher matcher = pattern.matcher(word);
 

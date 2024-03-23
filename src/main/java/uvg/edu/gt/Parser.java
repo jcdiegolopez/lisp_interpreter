@@ -22,7 +22,6 @@ public class Parser {
 
     private Expression parseExpression() {
         String token = tokens.get(current++);
-        
         if (isNumber(token)) {
             return new ConstantExpression(Integer.parseInt(token));
         } else if (token.equals("(")) {
@@ -37,9 +36,8 @@ public class Parser {
             return parsePredicate(token);
         } else if (token.equals("COND")) {
             return parseCond();
-        } else if (isArithmeticOperator(token)) { // Modificado para verificar si es un operador aritmético
-            
-            return parseArithmeticOperation(token); // Nuevo método para parsear expresiones aritméticas
+        } else if (isArithmeticOperator(token)) {
+            return parseArithmeticOperation(token);
         } else {
             return new VariableExpression(token);
         }
@@ -48,6 +46,7 @@ public class Parser {
     private ListExpression parseList() {
         List<Expression> expressions = new ArrayList<>();
         while (!tokens.get(current).equals(")")) {
+            System.err.println("Parsing list element: " + tokens.get(current));
             expressions.add(parseExpression());
         }
         current++;
@@ -58,6 +57,8 @@ public class Parser {
         // Para la instrucción QUOTE, simplemente devuelve la expresión siguiente.
         return parseExpression();
     }
+
+
 
     private Expression parseArithmeticOperation(String operator) {
         Expression left = parseExpression();
@@ -105,12 +106,36 @@ public class Parser {
     private Expression parsePredicate(String token) {
         // Parsea un predicado.
         List<Expression> arguments = new ArrayList<>();
-        while (!tokens.get(current).equals(")")) {
+        if (token.equals("ATOM") || token.equals("LIST")) {
+            if (tokens.get(current).equals("(")) {
+                // Si es un predicado que espera una lista de argumentos
+                current++; // Consumir el token '('
+                while (!tokens.get(current).equals(")")) {
+                    arguments.add(parseExpression());
+                }
+                current++; // Consumir el token ')'
+            } else {
+                // Si el predicado espera un solo argumento
+                arguments.add(parseExpression());
+            }
+        } else if (token.equals("EQUAL")) {
+            // Predicado EQUAL espera dos argumentos
             arguments.add(parseExpression());
+            arguments.add(parseExpression());
+        } else if (token.equals("<") || token.equals(">")) {
+            // Predicados de comparación (<, >) esperan dos argumentos
+            arguments.add(parseExpression());
+            arguments.add(parseExpression());
+        } else {
+            // Otros predicados que no necesitan verificación específica de argumentos
+            while (!tokens.get(current).equals(")")) {
+                arguments.add(parseExpression());
+            }
+            current++; // Consumir el token ')'
         }
-        current++; // Consumir el token ')'
         return new PredicateExpression(token, arguments);
     }
+    
 
     private Expression parseCond() {
         // Parsea una expresión COND.

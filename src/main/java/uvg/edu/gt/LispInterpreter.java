@@ -5,7 +5,7 @@ import java.util.List;
 public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
-        String inputProgram = "(+ (* 2 3) (/ (- 10 5) 2))";
+        String inputProgram = "(< (* 3 5) (3))";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
