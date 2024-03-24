@@ -15,4 +15,9 @@ public class VariableExpression extends Expression {
     public String toString() {
         return name;
     }
+
+    public String getName() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+    }
 }

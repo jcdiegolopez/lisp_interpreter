@@ -10,17 +10,19 @@ public class ConditionalExpression extends Expression {
     }
 
     @Override
-    public Object evaluate(Environment environment) {
-        for (Branch branch : branches) {
-            System.out.println("evaluando ramas");
-            Object conditionResult = branch.getCondition().evaluate(environment);
-            if (conditionResult instanceof Boolean && (Boolean) conditionResult) {
-                System.out.println("evaluando booleanos");
-                return branch.getResult().evaluate(environment);
-            }
+public Object evaluate(Environment environment) {
+    for (Branch branch : branches) {
+        Object conditionResult = branch.getCondition().evaluate(environment);
+        if (conditionResult instanceof Boolean && (Boolean) conditionResult) {
+            return branch.getResult().evaluate(environment);
+        } else if (conditionResult != null) {
+            // Si la condición no es una expresión booleana pero no es nula, la consideramos verdadera
+            return branch.getResult().evaluate(environment);
         }
-        return null; // No branch matched, return null or throw an exception
     }
+    // Si ninguna condición se cumple, lanzar una excepción
+    throw new IllegalArgumentException("No branch condition evaluated to true.");
+}
 
     static class Branch {
         private Expression condition;
