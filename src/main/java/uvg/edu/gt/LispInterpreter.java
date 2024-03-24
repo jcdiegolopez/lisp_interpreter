@@ -5,7 +5,7 @@ import java.util.List;
 public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
-        String inputProgram = "(COND ((= 2 2) 4) ((< 5 3) (- 7 2)))";
+        String inputProgram = "(COND ((EQUAL 3 2) 4) ((> 5 3) (- 7 5)))";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();

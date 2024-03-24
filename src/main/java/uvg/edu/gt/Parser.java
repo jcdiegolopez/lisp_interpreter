@@ -37,6 +37,7 @@ public class Parser {
         } else if (token.equalsIgnoreCase("COND")) {
             return parseCond();
         } else if (isArithmeticOperator(token)) {
+            System.out.println(token);
             return parseArithmeticOperation(token);
         } else {
             return new VariableExpression(token);
@@ -157,19 +158,53 @@ public class Parser {
     }
     
 
-    private Expression parseCond() {
+    /*private Expression parseCond() {
         // Parsea una expresión COND.
         System.out.println("entrando COND");
         List<ConditionalExpression.Branch> branches = new ArrayList<>();
         current++; // Consumir el token '('
-        while (!tokens.get(current).equals(")")) {
+        while (!tokens.get(current).equals(")") || tokens.get(current).equals("(")) {
             Expression condition = parseExpression();
             Expression result = parseExpression();
+            System.out.println(condition);
+            System.out.println("Result");
+            System.out.println(result);
             branches.add(new ConditionalExpression.Branch(condition, result));
+            current++; // Consumir el token ')'
+            if (tokens.size() == current){
+                break;
+            }
         }
-        current++; // Consumir el token ')'
+        return new ConditionalExpression(branches);
+    }*/
+    private Expression parseCond() {
+        System.out.println("entrando COND");
+        List<ConditionalExpression.Branch> branches = new ArrayList<>();
+        current++; // Consumir el token '('
+        while (!tokens.get(current).equals(")")) {
+            current++; // Consumir el token '(' de la condición
+            Expression condition = parseExpression();
+            current++; // Consumir el token '(' del resultado
+            Expression result = parseExpression();
+            branches.add(new ConditionalExpression.Branch(condition, result));
+            System.out.println("agreagr");
+            System.out.println(condition);
+            System.out.println(result);
+            current++; // Consumir el token ')'
+            current++; // Consumir el token ')'
+
+            if (tokens.size() == current){
+                current--;
+                break;
+            }
+        }
+        System.out.println(branches);
         return new ConditionalExpression(branches);
     }
+
+
+
+
 
     private boolean isNumber(String token) {
         try {
