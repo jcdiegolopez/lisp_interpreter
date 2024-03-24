@@ -159,6 +159,7 @@ public class Parser {
 
     private Expression parseCond() {
         // Parsea una expresión COND.
+        System.out.println("entrando COND");
         List<ConditionalExpression.Branch> branches = new ArrayList<>();
         current++; // Consumir el token '('
         while (!tokens.get(current).equals(")")) {

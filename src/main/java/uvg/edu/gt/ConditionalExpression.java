@@ -11,9 +11,15 @@ public class ConditionalExpression extends Expression {
 
     @Override
     public Object evaluate(Environment environment) {
-        // Implementa la evaluación de la expresión condicional COND.
-        // Por simplicidad, no lo he implementado en este ejemplo.
-        return null;
+        for (Branch branch : branches) {
+            System.out.println("evaluando ramas");
+            Object conditionResult = branch.getCondition().evaluate(environment);
+            if (conditionResult instanceof Boolean && (Boolean) conditionResult) {
+                System.out.println("evaluando booleanos");
+                return branch.getResult().evaluate(environment);
+            }
+        }
+        return null; // No branch matched, return null or throw an exception
     }
 
     static class Branch {

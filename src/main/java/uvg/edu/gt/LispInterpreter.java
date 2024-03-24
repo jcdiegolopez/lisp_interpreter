@@ -5,7 +5,7 @@ import java.util.List;
 public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
-        String inputProgram = "('(nashe sd()fasd fsdfasfasfs)) (+ 5 2)";
+        String inputProgram = "(COND ((EQUAL 2 1) 4) (> 5 3) ))";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
