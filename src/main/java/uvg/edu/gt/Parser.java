@@ -40,7 +40,6 @@ public class Parser {
         } else if (isArithmeticOperator(token)) {
             return parseArithmeticOperation(token);
         } else if(functionNames.contains(token)){
-            System.out.println("Function name: " + token);
             List<Expression> arguments = new ArrayList<>();
             while (!tokens.get(current).equals(")")) {
                 arguments.add(parseExpression());

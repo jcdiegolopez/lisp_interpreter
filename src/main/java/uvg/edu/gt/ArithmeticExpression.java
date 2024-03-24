@@ -14,11 +14,11 @@ public class ArithmeticExpression extends Expression {
 
     @Override
     public Object evaluate(Environment environment) {
-        System.out.println(left.getClass());
-        System.out.println(right.getClass());
+        
         Integer rightValue;
         Integer leftValue;
         if(left instanceof VariableExpression){
+            
             ConstantExpression leftC = (ConstantExpression) left.evaluate(environment);
             leftValue = (Integer) leftC.evaluate(environment) ;
         }else{
