@@ -5,7 +5,7 @@ import java.util.List;
 public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
-        String inputProgram = "('(nashe sd()fasd fsdfasfasfs)) (+ 5 2)";
+        String inputProgram = "(defun sum(a b) (+ a b))(sum 5 3)";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
@@ -21,7 +21,7 @@ public class LispInterpreter {
         Environment environment = new Environment();
         int count = 1;
         for (Expression exp : expressions) {
-            
+            System.out.println(exp);
             System.out.println("Resultado Exp "+ count + " :" +exp.evaluate(environment));
             count++;
         }

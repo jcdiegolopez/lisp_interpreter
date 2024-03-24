@@ -95,14 +95,16 @@ public class Parser {
     
 
     private Expression parseDefun() {
-        // Parsea la definición de una función.
         String functionName = tokens.get(current++);
         List<String> parameters = parseParameterList();
         List<Expression> body = new ArrayList<>();
+        
         while (!tokens.get(current).equals(")")) {
             body.add(parseExpression());
+            
         }
-        current++; // Consumir el token ')'
+        
+        
         return new DefunExpression(functionName, parameters, body);
     }
 
