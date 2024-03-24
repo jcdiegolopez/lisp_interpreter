@@ -10,7 +10,6 @@ public class LispInterpreter {
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
         List<String> tokens = lexer.tokenize(inputProgram);
-        System.err.println("tokens: " + tokens);
 
         // Paso 2: Parseo
         Environment environment = new Environment();
@@ -21,7 +20,7 @@ public class LispInterpreter {
         
         int count = 1;
         for (Expression exp : expressions) {
-            System.out.println("Resultado Exp "+ count + " :" +exp.evaluate(environment));
+            System.out.println("["+ count + "] " +exp.evaluate(environment));
             count++;
         }
     }
