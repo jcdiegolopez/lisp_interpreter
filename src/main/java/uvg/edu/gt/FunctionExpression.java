@@ -19,15 +19,20 @@ public class FunctionExpression extends Expression {
             // Verificar si la cantidad de argumentos es la misma que la cantidad de parámetros de la función
             if (function.getParameters().size() == arguments.size()) {
                 // Crear un nuevo entorno local para la función
-                Environment localEnv = new Environment(environment);
+                Environment localEnv = new Environment();
                 // Asignar los valores de los argumentos a los parámetros locales
                 for (int i = 0; i < arguments.size(); i++) {
                     String parameter = function.getParameters().get(i);
                     Object value = arguments.get(i).evaluate(environment);
-                    localEnv.assign(parameter, value);
+                    localEnv.defineVariable(parameter, function);
                 }
-                // Evaluar el cuerpo de la función en el nuevo entorno local
-                return function.getBody().evaluate(localEnv);
+                // Evaluar el cuerpo de la función en el entorno local
+                Object result = null;
+                for (Expression exp : function.getBody()) {
+                    result = exp.evaluate(localEnv);
+                }
+                return result;
+                
             } else {
                 throw new RuntimeException("Número incorrecto de argumentos para la función: " + functionName);
             }

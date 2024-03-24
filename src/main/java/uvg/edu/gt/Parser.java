@@ -41,7 +41,12 @@ public class Parser {
         } else if (isArithmeticOperator(token)) {
             return parseArithmeticOperation(token);
         } else if(environment.getFunctions().containsKey(token)){
-            return new FunctionExpression(token);
+            List<Expression> arguments = new ArrayList<>();
+            while (!tokens.get(current).equals(")")) {
+                arguments.add(parseExpression());
+            }
+            current++;
+            return new FunctionExpression(token, arguments);
         }else{
             return new VariableExpression(token);
         }
