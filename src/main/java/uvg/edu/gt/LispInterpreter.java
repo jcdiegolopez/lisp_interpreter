@@ -13,12 +13,13 @@ public class LispInterpreter {
         System.err.println("tokens: " + tokens);
 
         // Paso 2: Parseo
-        Parser parser = new Parser(tokens);
+        Environment environment = new Environment();
+        Parser parser = new Parser(tokens, environment);
         List<Expression> expressions = parser.parse();
         
 
         // Paso 3: Evaluación
-        Environment environment = new Environment();
+        
         int count = 1;
         for (Expression exp : expressions) {
             System.out.println(exp);

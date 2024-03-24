@@ -24,4 +24,8 @@ public class Environment {
     public Function lookupFunction(String name) {
         return functions.get(name);
     }
+
+    public Map<String, Function> getFunctions() {
+        return functions;
+    }
 }

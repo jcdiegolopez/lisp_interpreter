@@ -15,10 +15,7 @@ public class Function extends Expression {
 
     @Override
     public Object evaluate(Environment environment) {
-        // Las funciones Lisp deben evaluarse en el contexto del entorno actual.
-        // En esta implementación básica, solo se almacena la definición de la función en el entorno.
-        // Para evaluar la función, debe buscarse en el entorno y luego ejecutar su cuerpo.
-        environment.defineFunction(name, parameters, body);
+        
         return null;
     }
 }

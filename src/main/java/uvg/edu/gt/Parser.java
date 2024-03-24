@@ -7,9 +7,11 @@ import java.util.List;
 public class Parser {
     private int current = 0;
     private List<String> tokens;
+    private Environment environment;
 
-    public Parser(List<String> tokens) {
+    public Parser(List<String> tokens, Environment environment) {
         this.tokens = tokens;
+        this.environment = environment;
     }
 
     public List<Expression> parse() {
@@ -38,7 +40,9 @@ public class Parser {
             return parseCond();
         } else if (isArithmeticOperator(token)) {
             return parseArithmeticOperation(token);
-        } else {
+        } else if(environment.getFunctions().containsKey(token)){
+            return new FunctionExpression(token);
+        }else{
             return new VariableExpression(token);
         }
     }
