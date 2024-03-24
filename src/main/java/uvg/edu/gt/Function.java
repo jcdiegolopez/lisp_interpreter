@@ -18,4 +18,11 @@ public class Function extends Expression {
         
         return null;
     }
+
+    public List<String> getParameters() {
+        return parameters;
+    }
+    public List<Expression> getBody() {
+        return body;
+    }
 }
