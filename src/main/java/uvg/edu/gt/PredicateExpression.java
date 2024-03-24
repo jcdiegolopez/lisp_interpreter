@@ -1,6 +1,7 @@
 package uvg.edu.gt;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PredicateExpression extends Expression {
     private String predicate;
@@ -15,9 +16,9 @@ public class PredicateExpression extends Expression {
     public Object evaluate(Environment environment) {
         switch (predicate) {
             case "ATOM":
-                return evaluateAtom();
-            case "LIST":
-                return evaluateList();
+            return evaluateAtom(arguments.get(0));
+        case "LIST":
+            return evaluateList(arguments.get(0));
             case "EQUAL":
                 return evaluateEqual();
             case "<":
@@ -30,25 +31,25 @@ public class PredicateExpression extends Expression {
         
     }
 
-    private boolean evaluateAtom() {
-        // Verificar si el primer argumento es una variable
-        return arguments.size() > 0 && arguments.get(0) instanceof VariableExpression;
+    private boolean evaluateList(Expression exp) {
+        // Una lista es cualquier expresión que sea una instancia de ListExpression
+        return exp instanceof ListExpression;
     }
-
-    private boolean evaluateList() {
-        // Verificar si el primer argumento es una lista
-        return arguments.size() > 0 && arguments.get(0) instanceof ListExpression;
+    
+    private boolean evaluateAtom(Expression exp) {
+        // Un átomo es cualquier expresión que no sea una lista
+        return !(exp instanceof ListExpression);
     }
 
     private boolean evaluateEqual() {
-        // Verificar si todos los argumentos son iguales entre sí
-        if (arguments.size() <= 1) {
-            return true; // Si no hay argumentos o solo hay uno, se consideran iguales
+        // Verificar si todos los argumentos son iguales al primer argumento
+        if (arguments.size() < 2) {
+            throw new IllegalArgumentException("EQUAL predicate (=) requires at least two arguments.");
         }
-        Object firstValue = arguments.get(0).evaluate(null); // No se utiliza environment en este caso
+        Object firstValue = arguments.get(0).evaluate(null);
         for (int i = 1; i < arguments.size(); i++) {
-            Object nextValue = arguments.get(i).evaluate(null); // No se utiliza environment en este caso
-            if (!firstValue.equals(nextValue)) {
+            Object nextValue = arguments.get(i).evaluate(null);
+            if (!Objects.equals(firstValue, nextValue)) {
                 return false;
             }
         }
@@ -82,7 +83,6 @@ public class PredicateExpression extends Expression {
             throw new IllegalArgumentException("Greater than predicate (>) requires integer arguments.");
         }
     }
-    
 
     public String toString() {
         StringBuilder sb = new StringBuilder();

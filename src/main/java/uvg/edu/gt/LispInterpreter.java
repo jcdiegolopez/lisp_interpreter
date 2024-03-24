@@ -17,7 +17,6 @@ public class LispInterpreter {
         Environment environment = new Environment();
         Parser parser = new Parser(tokens);
         List<Expression> expressions = parser.parse();
-        
 
         // Paso 3: Evaluación
         

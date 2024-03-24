@@ -26,6 +26,8 @@ public class ComparisonExpression extends Expression {
                 return leftValue <= rightValue;
             case ">=":
                 return leftValue >= rightValue;
+            case "=":
+                return leftValue == rightValue;
             default:
                 throw new IllegalArgumentException("Invalid comparison operator: " + operator);
         }
