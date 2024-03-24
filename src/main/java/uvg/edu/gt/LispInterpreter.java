@@ -6,6 +6,7 @@ public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
         String inputProgram = "(defun sum(a b) (+ a b))(sum 5 3)";
+        // String inputProgram = "(setq x 3)(+ 5 x)";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
@@ -14,7 +15,7 @@ public class LispInterpreter {
 
         // Paso 2: Parseo
         Environment environment = new Environment();
-        Parser parser = new Parser(tokens, environment);
+        Parser parser = new Parser(tokens);
         List<Expression> expressions = parser.parse();
         
 

@@ -14,6 +14,8 @@ public class ArithmeticExpression extends Expression {
 
     @Override
     public Object evaluate(Environment environment) {
+        System.out.println(left.getClass());
+        System.out.println(right.getClass());
         Integer rightValue;
         Integer leftValue;
         if(left instanceof VariableExpression){
@@ -29,6 +31,8 @@ public class ArithmeticExpression extends Expression {
         }else{
             rightValue = (Integer) right.evaluate(environment);
         }
+
+        
 
         switch (operator) {
             case "+":

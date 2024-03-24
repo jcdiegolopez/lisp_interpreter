@@ -7,11 +7,10 @@ import java.util.List;
 public class Parser {
     private int current = 0;
     private List<String> tokens;
-    private Environment environment;
+    private List<String> functionNames = new ArrayList<>();
 
-    public Parser(List<String> tokens, Environment environment) {
+    public Parser(List<String> tokens) {
         this.tokens = tokens;
-        this.environment = environment;
     }
 
     public List<Expression> parse() {
@@ -40,12 +39,13 @@ public class Parser {
             return parseCond();
         } else if (isArithmeticOperator(token)) {
             return parseArithmeticOperation(token);
-        } else if(environment.getFunctions().containsKey(token)){
+        } else if(functionNames.contains(token)){
+            System.out.println("Function name: " + token);
             List<Expression> arguments = new ArrayList<>();
             while (!tokens.get(current).equals(")")) {
                 arguments.add(parseExpression());
             }
-            current++;
+            
             return new FunctionExpression(token, arguments);
         }else{
             return new VariableExpression(token);
@@ -105,6 +105,7 @@ public class Parser {
 
     private Expression parseDefun() {
         String functionName = tokens.get(current++);
+        functionNames.add(functionName);
         List<String> parameters = parseParameterList();
         List<Expression> body = new ArrayList<>();
         

@@ -13,6 +13,7 @@ public class FunctionExpression extends Expression {
 
     @Override
     public Object evaluate(Environment environment) {
+        
         // Obtener la función del entorno
         Function function = environment.lookupFunction(this.functionName);
         if (function != null) {
@@ -43,6 +44,6 @@ public class FunctionExpression extends Expression {
 
     @Override
     public String toString() {
-        return functionName; 
+        return functionName + arguments.toString();
     }
 }

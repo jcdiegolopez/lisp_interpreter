@@ -8,13 +8,14 @@ public class Environment {
     private Map<String, Expression> variables = new HashMap<>();
     private Map<String, Function> functions = new HashMap<>();
 
-    
+
 
     public void defineVariable(String name, Expression value) {
         variables.put(name, value);
     }
 
     public void defineFunction(String name, List<String> parameters, List<Expression> body) {
+        System.out.println("Defining function " + name);
         Function function = new Function(name, parameters, body);
         functions.put(name, function);
     }
@@ -29,5 +30,9 @@ public class Environment {
 
     public Map<String, Function> getFunctions() {
         return functions;
+    }
+
+    public Map<String, Expression> getVariables() {
+        return variables;
     }
 }
