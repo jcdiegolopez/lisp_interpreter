@@ -5,9 +5,8 @@ import java.util.List;
 public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
-        String inputProgram = "(defun sum(a b) (+ a b))(sum 5 3)";
-        // String inputProgram = "(setq x 3)(+ 5 x)";
-
+        String inputProgram = "(COND ((EQUAL 3 2) 4) ((> 5 3) (- 7 5)))";
+        
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
         List<String> tokens = lexer.tokenize(inputProgram);
