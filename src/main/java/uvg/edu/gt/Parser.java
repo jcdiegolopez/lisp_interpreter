@@ -53,9 +53,30 @@ public class Parser {
     }
 
     private Expression parseQuote() {
-        // Para la instrucción QUOTE, simplemente devuelve la expresión siguiente.
-        return parseExpression();
+        StringBuilder quotedStringBuilder = new StringBuilder();
+        int openParenthesisCount = 0; // Contador para el número de paréntesis abiertos
+    
+        // Iterar sobre los tokens hasta encontrar el paréntesis de cierre correspondiente
+        while (current < tokens.size()) {
+            String currentToken = tokens.get(current);
+            if (currentToken.equals("(")) {
+                openParenthesisCount++; // Incrementar el contador de paréntesis abiertos
+            } else if (currentToken.equals(")")) {
+                if (openParenthesisCount == 0) {
+                    break; // Salir si ya se ha encontrado el paréntesis de cierre correspondiente
+                }
+                openParenthesisCount--; // Decrementar el contador de paréntesis abiertos
+            }
+    
+            // Agregar el token actual al string quoted
+            quotedStringBuilder.append(currentToken).append(" ");
+            current++;
+        }
+    
+        // Devolver la expresión Quote con el string quoted generado
+        return new QuoteExpression(quotedStringBuilder.toString().trim());
     }
+    
 
 
 

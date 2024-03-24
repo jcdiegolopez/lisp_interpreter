@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class Lexer {
     // La expresión regular LISP_REGEX define patrones específicos para paréntesis, palabras, números, cadenas y operadores.
-    private static final String LISP_REGEX = "\\(|\\)|\"[^\"]*\"|\\w+|\\d+|[+\\-*/]";
+    
 
     // Este método toma una cadena de entrada y la divide en tokens.
     public List<String> tokenize(String input) {
@@ -32,7 +32,8 @@ public class Lexer {
         List<String> tokens = new ArrayList<>();
 
         // Patrón para identificar paréntesis, palabras, números y cadenas de texto.
-        Pattern pattern = Pattern.compile("([()+\\-*/<>=])|(\\w+)|(\\d+)|(\"[^\"]*\")");
+        Pattern pattern = Pattern.compile("([()+\\-*/<>='])|(\\w+)|(\\d+)|(\"[^\"]*\")");
+
         // Crear un objeto Matcher para la palabra.
         Matcher matcher = pattern.matcher(word);
 
