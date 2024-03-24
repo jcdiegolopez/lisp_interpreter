@@ -16,9 +16,9 @@ public class PredicateExpression extends Expression {
     public Object evaluate(Environment environment) {
         switch (predicate) {
             case "ATOM":
-                return evaluateAtom();
-            case "LIST":
-                return evaluateList();
+            return evaluateAtom(arguments.get(0));
+        case "LIST":
+            return evaluateList(arguments.get(0));
             case "EQUAL":
                 return evaluateEqual();
             case "<":
@@ -31,24 +31,24 @@ public class PredicateExpression extends Expression {
         
     }
 
-    private Object evaluateList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'evaluateList'");
+    private boolean evaluateList(Expression exp) {
+        // Una lista es cualquier expresión que sea una instancia de ListExpression
+        return exp instanceof ListExpression;
     }
-
-    private Object evaluateAtom() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'evaluateAtom'");
+    
+    private boolean evaluateAtom(Expression exp) {
+        // Un átomo es cualquier expresión que no sea una lista
+        return !(exp instanceof ListExpression);
     }
 
     private boolean evaluateEqual() {
-        // Verificar si todos los argumentos son iguales entre sí
+        // Verificar si todos los argumentos son iguales al primer argumento
         if (arguments.size() < 2) {
             throw new IllegalArgumentException("EQUAL predicate (=) requires at least two arguments.");
         }
-        Object firstValue = arguments.get(0).evaluate(null); // No se utiliza environment en este caso
+        Object firstValue = arguments.get(0).evaluate(null);
         for (int i = 1; i < arguments.size(); i++) {
-            Object nextValue = arguments.get(i).evaluate(null); // No se utiliza environment en este caso
+            Object nextValue = arguments.get(i).evaluate(null);
             if (!Objects.equals(firstValue, nextValue)) {
                 return false;
             }

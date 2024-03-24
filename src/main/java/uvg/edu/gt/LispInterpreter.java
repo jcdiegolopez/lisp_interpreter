@@ -5,8 +5,7 @@ import java.util.List;
 public class LispInterpreter {
     public static void main(String[] args) {
         // Definir el código Lisp a evaluar
-        String inputProgram = "(COND ((= 2 2) 4) ((< 5 3) (- 7 2)) ((ATOM '(a b c)) 'atom) (else 'none))";
-
+        String inputProgram = "(COND ((= 2 2) 4) ((< 5 3) (- 7 2)))";
 
         // Paso 1: Tokenización
         Lexer lexer = new Lexer();
@@ -16,14 +15,12 @@ public class LispInterpreter {
         // Paso 2: Parseo
         Parser parser = new Parser(tokens);
         List<Expression> expressions = parser.parse();
-        
 
         // Paso 3: Evaluación
         Environment environment = new Environment();
         int count = 1;
         for (Expression exp : expressions) {
-            
-            System.out.println("Resultado Exp "+ count + " :" +exp.evaluate(environment));
+            System.out.println("Resultado Exp " + count + " :" + exp.evaluate(environment));
             count++;
         }
     }
