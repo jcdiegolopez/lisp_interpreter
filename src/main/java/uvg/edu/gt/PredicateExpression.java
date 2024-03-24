@@ -1,6 +1,7 @@
 package uvg.edu.gt;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PredicateExpression extends Expression {
     private String predicate;
@@ -30,25 +31,25 @@ public class PredicateExpression extends Expression {
         
     }
 
-    private boolean evaluateAtom() {
-        // Verificar si el primer argumento es una variable
-        return arguments.size() > 0 && arguments.get(0) instanceof VariableExpression;
+    private Object evaluateList() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'evaluateList'");
     }
 
-    private boolean evaluateList() {
-        // Verificar si el primer argumento es una lista
-        return arguments.size() > 0 && arguments.get(0) instanceof ListExpression;
+    private Object evaluateAtom() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'evaluateAtom'");
     }
 
     private boolean evaluateEqual() {
         // Verificar si todos los argumentos son iguales entre sí
-        if (arguments.size() <= 1) {
-            return true; // Si no hay argumentos o solo hay uno, se consideran iguales
+        if (arguments.size() < 2) {
+            throw new IllegalArgumentException("EQUAL predicate (=) requires at least two arguments.");
         }
         Object firstValue = arguments.get(0).evaluate(null); // No se utiliza environment en este caso
         for (int i = 1; i < arguments.size(); i++) {
             Object nextValue = arguments.get(i).evaluate(null); // No se utiliza environment en este caso
-            if (!firstValue.equals(nextValue)) {
+            if (!Objects.equals(firstValue, nextValue)) {
                 return false;
             }
         }
@@ -82,7 +83,6 @@ public class PredicateExpression extends Expression {
             throw new IllegalArgumentException("Greater than predicate (>) requires integer arguments.");
         }
     }
-    
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
