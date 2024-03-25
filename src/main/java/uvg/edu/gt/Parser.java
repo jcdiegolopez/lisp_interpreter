@@ -153,7 +153,7 @@ public class Parser {
             // Predicado EQUAL espera dos argumentos
             arguments.add(parseExpression());
             arguments.add(parseExpression());
-        } else if (token.equals("<") || token.equals(">")) {
+        } else if (token.equals("<") || token.equals(">") || token.equals("<=") || token.equals(">=") || token.equals("=")) {
             // Predicados de comparación (<, >) esperan dos argumentos
             arguments.add(parseExpression());
             arguments.add(parseExpression());
@@ -176,11 +176,9 @@ public class Parser {
             current++; // Consumir el token '(' de la condición
 
             Expression condition = parseExpression();
-            System.out.println("Condicion" + condition);
              // Consumir el token '(' del resultado
 
             Expression result = parseExpression();
-            System.out.println("Resultado" + result);
             branches.add(new ConditionalExpression.Branch(condition, result));
             current++; // Consumir el token ')'
 
@@ -209,6 +207,6 @@ public class Parser {
 
     private boolean isPredicate(String token) {
         return token.equals("ATOM") || token.equals("LIST") || token.equals("EQUAL") ||
-               token.equals("<") || token.equals(">");
+               token.equals("<") || token.equals(">") || token.equals("=") || token.equals("<=") || token.equals(">=");
     }
 }

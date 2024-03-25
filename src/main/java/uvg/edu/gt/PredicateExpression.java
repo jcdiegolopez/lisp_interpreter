@@ -21,10 +21,16 @@ public class PredicateExpression extends Expression {
             return evaluateList(arguments.get(0), environment);
             case "EQUAL":
                 return evaluateEqual(environment);
+            case "=":
+                return evaluateEqual(environment);
             case "<":
                 return evaluateLessThan(environment);
             case ">":
                 return evaluateGreaterThan(environment);
+            case "<=":
+                return evaluateLessOrEqualThan(environment);
+            case ">=":
+                return evaluateMoreOrEqualThan(environment);
             default:
                 throw new IllegalArgumentException("Unknown predicate: " + predicate);
         }
@@ -83,6 +89,35 @@ public class PredicateExpression extends Expression {
             throw new IllegalArgumentException("Greater than predicate (>) requires integer arguments.");
         }
     }
+
+    private boolean evaluateLessOrEqualThan(Environment environment) {
+        // Verificar si el primer argumento es menor o igual que el segundo argumento
+        if (arguments.size() != 2) {
+            throw new IllegalArgumentException("Less than or equal to predicate (<=) requires exactly two arguments.");
+        }
+        Object firstValue = arguments.get(0).evaluate(environment);
+        Object secondValue = arguments.get(1).evaluate(environment);
+        if (firstValue instanceof Integer && secondValue instanceof Integer) {
+            return (Integer) firstValue <= (Integer) secondValue;
+        } else {
+            throw new IllegalArgumentException("Less than or equal to predicate (<=) requires integer arguments.");
+        }
+    }
+
+    private boolean evaluateMoreOrEqualThan(Environment environment) {
+        // Verificar si el primer argumento es mayor o igual que el segundo argumento
+        if (arguments.size() != 2) {
+            throw new IllegalArgumentException("Greater than or equal to predicate (>=) requires exactly two arguments.");
+        }
+        Object firstValue = arguments.get(0).evaluate(environment);
+        Object secondValue = arguments.get(1).evaluate(environment);
+        if (firstValue instanceof Integer && secondValue instanceof Integer) {
+            return (Integer) firstValue >= (Integer) secondValue;
+        } else {
+            throw new IllegalArgumentException("Greater than or equal to predicate (>=) requires integer arguments.");
+        }
+    }
+
 
     public String toString() {
         StringBuilder sb = new StringBuilder();

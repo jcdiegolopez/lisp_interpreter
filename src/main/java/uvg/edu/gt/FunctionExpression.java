@@ -26,8 +26,6 @@ public class FunctionExpression extends Expression {
                 for (int i = 0; i < arguments.size(); i++) {
 
                     String parameter = function.getParameters().get(i);
-                    System.out.println("Parametro" + parameter);
-                    System.out.println("n" + localEnv.getVariables());
                     Object argumentoEvaluado = arguments.get(i).evaluate(localEnv);
                     localEnv.defineVariable(parameter, new ConstantExpression(argumentoEvaluado));
 
