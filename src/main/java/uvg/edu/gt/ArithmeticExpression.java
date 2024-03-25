@@ -1,5 +1,9 @@
 package uvg.edu.gt;
 
+/**
+ * The `ArithmeticExpression` class represents arithmetic expressions with an operator, left and right
+ * operands, and can evaluate the expression based on the operator.
+ */
 public class ArithmeticExpression extends Expression {
     private String operator;
     private Expression left;
@@ -12,6 +16,7 @@ public class ArithmeticExpression extends Expression {
         
     }
 
+    // This code snippet is from a Java class named `ArithmeticExpression`.
     @Override
     public Object evaluate(Environment environment) {
         

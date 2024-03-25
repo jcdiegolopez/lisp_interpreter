@@ -9,6 +9,17 @@ public class ConditionalExpression extends Expression {
         this.branches = branches;
     }
 
+    /**
+     * This Java function evaluates conditions in branches and returns the result of the first branch
+     * with a true condition, throwing an exception if none are true.
+     * 
+     * @param environment The `environment` parameter in the `evaluate` method is typically an object
+     * that represents the current state or context in which the evaluation is taking place. It may
+     * contain variables, functions, or other information needed for the evaluation process. The
+     * `evaluate` method seems to be iterating over different branches, evaluating
+     * @return The `evaluate` method is returning the result of the first branch whose condition
+     * evaluates to true.
+     */
     @Override
 public Object evaluate(Environment environment) {
     for (Branch branch : branches) {
@@ -21,6 +32,10 @@ public Object evaluate(Environment environment) {
     throw new IllegalArgumentException("No branch condition evaluated to true.");
 }
 
+    /**
+     * The `Branch` class represents a conditional branch with a condition and a corresponding result
+     * expression.
+     */
     static class Branch {
         private Expression condition;
         private Expression result;
@@ -39,6 +54,15 @@ public Object evaluate(Environment environment) {
         }
     }
 
+    /**
+     * The toString method generates a string representation of a list of branches in a conditional
+     * statement.
+     * 
+     * @return The `toString` method is returning a string representation of a list of branches in the
+     * format of a conditional expression. The string starts with "(COND" and then iterates over each
+     * branch, appending the condition and result of each branch within parentheses. Finally, the
+     * string ends with a closing parenthesis.
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("(COND ");

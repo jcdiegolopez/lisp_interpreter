@@ -2,6 +2,10 @@ package uvg.edu.gt;
 
 import java.util.List;
 
+/**
+ * The `Function` class represents a function with a name, parameters, and body in Java.
+ */
+
 public class Function extends Expression {
     private String name;
     private List<String> parameters;
@@ -13,6 +17,7 @@ public class Function extends Expression {
         this.body = body;
     }
 
+    // The code snippet you provided is from a Java class named `Function`. Here's what each part does:
     @Override
     public Object evaluate(Environment environment) {
         

@@ -1,5 +1,9 @@
 package uvg.edu.gt;
 
+/**
+ * The ConstantExpression class represents an expression with a constant value that can be evaluated to
+ * return the value itself.
+ */
 public class ConstantExpression extends Expression {
     private Object value;
 

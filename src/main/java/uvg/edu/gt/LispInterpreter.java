@@ -5,6 +5,10 @@ import java.util.List;
 import java.io.IOException;
 
 public class LispInterpreter {
+    /**
+     * The main function reads a Lisp file, tokenizes its content, parses the tokens, evaluates the
+     * expressions, and prints the results.
+     */
     public static void main(String[] args) {
         
         try {
