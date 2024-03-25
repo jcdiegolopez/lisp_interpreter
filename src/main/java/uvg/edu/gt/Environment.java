@@ -15,7 +15,6 @@ public class Environment {
     }
 
     public void defineFunction(String name, List<String> parameters, List<Expression> body) {
-        System.out.println("Defining function " + name);
         Function function = new Function(name, parameters, body);
         functions.put(name, function);
     }

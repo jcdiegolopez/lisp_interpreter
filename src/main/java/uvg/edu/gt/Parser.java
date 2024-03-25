@@ -38,7 +38,6 @@ public class Parser {
         } else if (token.equalsIgnoreCase("COND")) {
             return parseCond();
         } else if (isArithmeticOperator(token)) {
-            System.out.println(token);
             return parseArithmeticOperation(token);
         } else if(functionNames.contains(token)){
             List<Expression> arguments = new ArrayList<>();
@@ -169,27 +168,8 @@ public class Parser {
     }
     
 
-    /*private Expression parseCond() {
-        // Parsea una expresión COND.
-        System.out.println("entrando COND");
-        List<ConditionalExpression.Branch> branches = new ArrayList<>();
-        current++; // Consumir el token '('
-        while (!tokens.get(current).equals(")") || tokens.get(current).equals("(")) {
-            Expression condition = parseExpression();
-            Expression result = parseExpression();
-            System.out.println(condition);
-            System.out.println("Result");
-            System.out.println(result);
-            branches.add(new ConditionalExpression.Branch(condition, result));
-            current++; // Consumir el token ')'
-            if (tokens.size() == current){
-                break;
-            }
-        }
-        return new ConditionalExpression(branches);
-    }*/
+
     private Expression parseCond() {
-        System.out.println("entrando COND");
         List<ConditionalExpression.Branch> branches = new ArrayList<>();
         current++; // Consumir el token '('
         while (!tokens.get(current).equals(")")) {
@@ -198,9 +178,6 @@ public class Parser {
             current++; // Consumir el token '(' del resultado
             Expression result = parseExpression();
             branches.add(new ConditionalExpression.Branch(condition, result));
-            System.out.println("agreagr");
-            System.out.println(condition);
-            System.out.println(result);
             current++; // Consumir el token ')'
             current++; // Consumir el token ')'
 
@@ -209,7 +186,6 @@ public class Parser {
                 break;
             }
         }
-        System.out.println(branches);
         return new ConditionalExpression(branches);
     }
 

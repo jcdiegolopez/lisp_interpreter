@@ -15,7 +15,6 @@ public class ComparisonExpression extends Expression {
     public Object evaluate(Environment environment) {
         int leftValue = (int) left.evaluate(environment);
         int rightValue = (int) right.evaluate(environment);
-        System.err.println("Comparing " + leftValue + " " + operator + " " + rightValue);
 
         switch (operator) {
             case "<":

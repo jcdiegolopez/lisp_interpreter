@@ -12,12 +12,8 @@ public class ConditionalExpression extends Expression {
     @Override
 public Object evaluate(Environment environment) {
     for (Branch branch : branches) {
-        System.out.println("Evaluando Branches");
-        System.out.println(branch.getCondition());
-        System.out.println(branch.getCondition().evaluate(environment));
         Object conditionResult = branch.getCondition().evaluate(environment);
         if (conditionResult instanceof Boolean && (Boolean) conditionResult) {
-            System.out.println(branch.getResult().evaluate(environment));
             return branch.getResult().evaluate(environment);
         }
     }
