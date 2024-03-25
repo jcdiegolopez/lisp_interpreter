@@ -13,14 +13,14 @@ public class FunctionExpression extends Expression {
 
     @Override
     public Object evaluate(Environment environment) {
-        
+
         // Obtener la función del entorno
         Function function = environment.lookupFunction(this.functionName);
         if (function != null) {
             // Verificar si la cantidad de argumentos es la misma que la cantidad de parámetros de la función
             if (function.getParameters().size() == arguments.size()) {
                 // Crear un nuevo entorno local para la función
-                Environment localEnv = new Environment();
+                Environment localEnv = new Environment(environment);
                 // Asignar los valores de los argumentos a los parámetros locales
                 for (int i = 0; i < arguments.size(); i++) {
                     String parameter = function.getParameters().get(i);
@@ -32,7 +32,7 @@ public class FunctionExpression extends Expression {
                     result = exp.evaluate(localEnv);
                 }
                 return result;
-                
+
             } else {
                 throw new RuntimeException("Número incorrecto de argumentos para la función: " + functionName);
             }

@@ -8,7 +8,14 @@ public class Environment {
     private Map<String, Expression> variables = new HashMap<>();
     private Map<String, Function> functions = new HashMap<>();
 
+    public Environment(Environment parent) {
+        this.variables = new HashMap<>(parent.variables);
+        this.functions = new HashMap<>(parent.functions);
+    }
 
+    public Environment() {
+
+    }
 
     public void defineVariable(String name, Expression value) {
         variables.put(name, value);
