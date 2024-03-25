@@ -229,4 +229,4 @@ Diagram de secuencias
 
 **Video**
 
-[<u>https://youtu.be/WJGV8fLIy3A</u>](https://youtu.be/WJGV8fLIy3A)
+[![Video Demostración](https://wallpapers.com/images/featured/coding-background-9izlympnd0ovmpli.jpg)](https://youtu.be/WJGV8fLIy3A)
