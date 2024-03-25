@@ -228,5 +228,4 @@ Diagram de secuencias
 <img src="media/image2.png" style="width:6.26563in;height:5.65505in" />
 
 **Video**
-
-[![Video Demostración](https://wallpapers.com/images/featured/coding-background-9izlympnd0ovmpli.jpg)](https://youtu.be/WJGV8fLIy3A)
+https://youtu.be/WJGV8fLIy3A
