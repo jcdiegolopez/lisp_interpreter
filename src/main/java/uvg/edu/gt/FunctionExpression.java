@@ -24,8 +24,13 @@ public class FunctionExpression extends Expression {
                 Environment localEnv = new Environment(environment);
                 // Asignar los valores de los argumentos a los parámetros locales
                 for (int i = 0; i < arguments.size(); i++) {
+
                     String parameter = function.getParameters().get(i);
-                    localEnv.defineVariable(parameter, arguments.get(i));
+                    System.out.println("Parametro" + parameter);
+                    System.out.println("n" + localEnv.getVariables());
+                    Object argumentoEvaluado = arguments.get(i).evaluate(localEnv);
+                    localEnv.defineVariable(parameter, new ConstantExpression(argumentoEvaluado));
+
                     
                 }
                 // Evaluar el cuerpo de la función en el entorno local

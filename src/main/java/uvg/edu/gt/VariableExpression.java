@@ -9,7 +9,6 @@ public class VariableExpression extends Expression {
 
     @Override
     public Object evaluate(Environment environment) {
-        System.out.println(environment.lookupVariable(name).evaluate(environment));
         return environment.lookupVariable(name).evaluate(environment);
     }
 

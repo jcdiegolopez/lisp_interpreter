@@ -1,4 +1,7 @@
-(defun counter (n)
-  (cond ((> n 10) n)
-        (t (counter(+ n 1)))))
-(counter 0)
+(defun fibonacci (n)
+  (cond
+    ((EQUAL n 0) 0)
+    ((EQUAL n 1) 1)
+    (t (+ (fibonacci (- n 1))
+          (fibonacci (- n 2))))))
+(fibonacci 10)
