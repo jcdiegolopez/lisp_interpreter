@@ -1,6 +1,7 @@
-(defun fibonacci (n)
+(setq n 5)
   (cond ((EQUAL n 0) 0)
         ((EQUAL n 1) 1)
-        ((t) (+ (fibonacci (- n 1)) (fibonacci (- n 2))))))
-
-(fibonacci 5)
+        ((t) (+ 2 3)))
+(defun fibonacci (a b)
+(> a b))
+(fibonacci 5 3)

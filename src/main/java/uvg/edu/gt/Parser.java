@@ -181,7 +181,7 @@ public class Parser {
             current++; // Consumir el token ')'
             current++; // Consumir el token ')'
 
-            if (tokens.size() == current){
+            if (tokens.size() == current || tokens.get(current).equals("(")){
                 current--;
                 break;
             }

@@ -47,12 +47,8 @@ public class PredicateExpression extends Expression {
             throw new IllegalArgumentException("EQUAL predicate (=) requires at least two arguments.");
         }
         Object firstValue = arguments.get(0).evaluate(environment);
-        System.out.println("first value");
-        System.out.println(firstValue.getClass());
         for (int i = 1; i < arguments.size(); i++) {
             Object nextValue = arguments.get(i).evaluate(environment);
-            System.out.println("next value");
-            System.out.println(nextValue.getClass());
             if (!Objects.equals(firstValue, nextValue)) {
                 return false;
             }
