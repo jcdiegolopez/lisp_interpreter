@@ -171,21 +171,26 @@ public class Parser {
 
     private Expression parseCond() {
         List<ConditionalExpression.Branch> branches = new ArrayList<>();
-        current++; // Consumir el token '('
+         // Consumir el token '('
+        System.out.println(tokens.get(current));
         while (!tokens.get(current).equals(")")) {
             current++; // Consumir el token '(' de la condición
+
             Expression condition = parseExpression();
-            current++; // Consumir el token '(' del resultado
+             // Consumir el token '(' del resultado
+
             Expression result = parseExpression();
             branches.add(new ConditionalExpression.Branch(condition, result));
             current++; // Consumir el token ')'
-            current++; // Consumir el token ')'
 
-            if (tokens.size() == current || tokens.get(current).equals("(")){
-                current--;
+    
+            if (tokens.size() == current) {
                 break;
             }
         }
+         // Consumir el token ')'
+        System.out.println(tokens.get(current));
+        System.out.println(tokens.get(current));
         return new ConditionalExpression(branches);
     }
 
