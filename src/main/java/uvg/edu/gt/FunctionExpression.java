@@ -16,6 +16,7 @@ public class FunctionExpression extends Expression {
 
         // Obtener la función del entorno
         Function function = environment.lookupFunction(this.functionName);
+        
         if (function != null) {
             // Verificar si la cantidad de argumentos es la misma que la cantidad de parámetros de la función
             if (function.getParameters().size() == arguments.size()) {
@@ -25,11 +26,14 @@ public class FunctionExpression extends Expression {
                 for (int i = 0; i < arguments.size(); i++) {
                     String parameter = function.getParameters().get(i);
                     localEnv.defineVariable(parameter, arguments.get(i));
+                    
                 }
                 // Evaluar el cuerpo de la función en el entorno local
                 Object result = null;
                 for (Expression exp : function.getBody()) {
                     result = exp.evaluate(localEnv);
+                    
+                    
                 }
                 return result;
 
