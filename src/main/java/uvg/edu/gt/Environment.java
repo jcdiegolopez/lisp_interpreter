@@ -14,7 +14,7 @@ public class Environment {
     }
 
     public Environment() {
-
+        variables.put("t",  new BooleanExpression(true));
     }
 
     public void defineVariable(String name, Expression value) {

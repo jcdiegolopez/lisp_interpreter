@@ -17,20 +17,11 @@ public class ArithmeticExpression extends Expression {
         
         Integer rightValue;
         Integer leftValue;
-        if(left instanceof VariableExpression){
-            
-            ConstantExpression leftC = (ConstantExpression) left.evaluate(environment);
-            leftValue = (Integer) leftC.evaluate(environment) ;
-        }else{
-            leftValue = (Integer) left.evaluate(environment);
-        }
 
-        if(right instanceof VariableExpression){
-            ConstantExpression rightC = (ConstantExpression) right.evaluate(environment);
-            rightValue = (Integer) rightC.evaluate(environment) ;
-        }else{
-            rightValue = (Integer) right.evaluate(environment);
-        }
+        leftValue = (Integer) left.evaluate(environment);
+
+        rightValue = (Integer) right.evaluate(environment);
+
 
         
 

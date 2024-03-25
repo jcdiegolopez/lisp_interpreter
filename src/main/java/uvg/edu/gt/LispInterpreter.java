@@ -25,6 +25,7 @@ public class LispInterpreter {
             // Paso 3: Evaluación
             int count = 1;
             for (Expression exp : expressions) {
+                System.out.println(exp);
                 System.out.println("Resultado Exp " + count + " :" + exp.evaluate(environment));
                 count++;
             }

@@ -16,39 +16,43 @@ public class PredicateExpression extends Expression {
     public Object evaluate(Environment environment) {
         switch (predicate) {
             case "ATOM":
-            return evaluateAtom(arguments.get(0));
+            return evaluateAtom(arguments.get(0), environment);
         case "LIST":
-            return evaluateList(arguments.get(0));
+            return evaluateList(arguments.get(0), environment);
             case "EQUAL":
-                return evaluateEqual();
+                return evaluateEqual(environment);
             case "<":
-                return evaluateLessThan();
+                return evaluateLessThan(environment);
             case ">":
-                return evaluateGreaterThan();
+                return evaluateGreaterThan(environment);
             default:
                 throw new IllegalArgumentException("Unknown predicate: " + predicate);
         }
         
     }
 
-    private boolean evaluateList(Expression exp) {
+    private boolean evaluateList(Expression exp, Environment environment) {
         // Una lista es cualquier expresión que sea una instancia de ListExpression
         return exp instanceof ListExpression;
     }
     
-    private boolean evaluateAtom(Expression exp) {
+    private boolean evaluateAtom(Expression exp, Environment environment) {
         // Un átomo es cualquier expresión que no sea una lista
         return !(exp instanceof ListExpression);
     }
 
-    private boolean evaluateEqual() {
+    private boolean evaluateEqual(Environment environment) {
         // Verificar si todos los argumentos son iguales al primer argumento
         if (arguments.size() < 2) {
             throw new IllegalArgumentException("EQUAL predicate (=) requires at least two arguments.");
         }
-        Object firstValue = arguments.get(0).evaluate(null);
+        Object firstValue = arguments.get(0).evaluate(environment);
+        System.out.println("first value");
+        System.out.println(firstValue.getClass());
         for (int i = 1; i < arguments.size(); i++) {
-            Object nextValue = arguments.get(i).evaluate(null);
+            Object nextValue = arguments.get(i).evaluate(environment);
+            System.out.println("next value");
+            System.out.println(nextValue.getClass());
             if (!Objects.equals(firstValue, nextValue)) {
                 return false;
             }
@@ -56,13 +60,13 @@ public class PredicateExpression extends Expression {
         return true;
     }
 
-    private boolean evaluateLessThan() {
+    private boolean evaluateLessThan(Environment environment) {
         // Verificar si el primer argumento es menor que el segundo argumento
         if (arguments.size() != 2) {
             throw new IllegalArgumentException("Less than predicate (<) requires exactly two arguments.");
         }
-        Object firstValue = arguments.get(0).evaluate(null); // No se utiliza environment en este caso
-        Object secondValue = arguments.get(1).evaluate(null); // No se utiliza environment en este caso
+        Object firstValue = arguments.get(0).evaluate(environment);
+        Object secondValue = arguments.get(1).evaluate(environment);
         if (firstValue instanceof Integer && secondValue instanceof Integer) {
             return (Integer) firstValue < (Integer) secondValue;
         } else {
@@ -70,13 +74,13 @@ public class PredicateExpression extends Expression {
         }
     }
     
-    private boolean evaluateGreaterThan() {
+    private boolean evaluateGreaterThan(Environment environment) {
         // Verificar si el primer argumento es mayor que el segundo argumento
         if (arguments.size() != 2) {
             throw new IllegalArgumentException("Greater than predicate (>) requires exactly two arguments.");
         }
-        Object firstValue = arguments.get(0).evaluate(null); // No se utiliza environment en este caso
-        Object secondValue = arguments.get(1).evaluate(null); // No se utiliza environment en este caso
+        Object firstValue = arguments.get(0).evaluate(environment);
+        Object secondValue = arguments.get(1).evaluate(environment);
         if (firstValue instanceof Integer && secondValue instanceof Integer) {
             return (Integer) firstValue > (Integer) secondValue;
         } else {
